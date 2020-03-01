@@ -215,7 +215,6 @@
       var donation_name = data[0][i].donation_name + "";
       var donation_description = data[0][i].donation_description + "";
       var donation_quantity = data[0][i].donation_quantity + "";
-      console.log(typeof donation_quantity + ', ' + donation_quantity);
 
       table.row.add([donation_id, donation_name, donation_description, donation_quantity]).draw(false);
     }
@@ -237,8 +236,6 @@
     http.onreadystatechange = function () {//Call a function when the state changes.
       if (http.readyState == 4 && http.status == 200) {
         select_sponsor(window.sponsor_id);
-
-        console.log(http.responseText);
       }
     }
     http.send(params);

@@ -133,7 +133,6 @@ function select_warehouse(warehouse_id) {
  var item_id = document.getElementById('warehouseTypes').value;
  var http = new XMLHttpRequest();
  var api_call_string = 'http://citysupport.tech/api/warehouses/donations/' + warehouse_id + "/" + item_id;
- console.log("api_call_string: " + api_call_string);
  $.get(api_call_string, function (data, status) {
    update_table(data);
  });
@@ -147,7 +146,6 @@ function update_table(data) {
       var donation_name = data[0][i].donation_name+"";
       var donation_description = data[0][i].donation_description+"";
       var donation_quantity = data[0][i].donation_quantity+"";
-      console.log(typeof donation_quantity + ', ' + donation_quantity);
 
       table.row.add([donation_name, donation_description, donation_quantity]).draw(false);
     }
