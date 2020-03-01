@@ -40,11 +40,11 @@ router.get('/warehouses/:id', function (req, res, next) {
 
 
 /* GET api listing. */
-router.get('/donations/:wid/:tid', function (req, res, next) {
+router.get('/warehouses/donations/:wid/:tid', function (req, res, next) {
   let sql = 'CALL getWarehousesAndDonations(?,?)';
   console.log((req.params["wid"], req.params["tid"]));
   con.query(sql, [req.params["wid"], req.params["tid"]], function (err, result, fields) {
-    if (err) console.log("whoops");
+    if (err) console.log(err);
     res.send(result);
   });
 });
@@ -75,6 +75,8 @@ router.post('/donations/claim', function (req, res, next) {
   var warehouse_id = req.body.warehouse_id;
   var donation_id = req.body.donation_id;
   var quantity = req.body.claim_quantity;
+
+  console.log([warehouse_id, donation_id, quantity]);
 
   let sql = 'CALL claim(?,?,?)';
   con.query(sql, [warehouse_id, donation_id, quantity], function (err, result, fields) {

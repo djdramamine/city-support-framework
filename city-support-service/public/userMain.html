@@ -1,18 +1,32 @@
 <html>
-<head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-
-  <link rel="stylesheet" href="http://citysupport.tech/stylesheets/userMain.css">
-  <script type="text/javascript">
-    $(document).ready(function(){
-        $('table.itemsTable').DataTable();
-    });
-  </script>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+  
+    <link rel="stylesheet" href="http://citysupport.tech/stylesheets/userMain.css">
+    <script type="text/javascript">
+      $(document).ready(function () {
+        window.table = $('table.itemsTable').DataTable({
+          "colounDefs": [{
+            "targets": -1,
+            "data": null,
+            //"defaultContent": "<button class='btn btn-primary' data-toggle='modal' data-target='#submitModal'>Claim</button>"
+          }]
+        });
+      });
+    </script>
   <title>User Page</title>
 </head>
 <body>
@@ -34,17 +48,12 @@
 <br>
 <div id="mainDiv">
   <div id="leftDiv">
-      <div id="lefDivTop">
         <label for="warehouseTypes">Select Warehouse Types</label>
         <br>
-        <select id="warehouseTypes">
+        <select onchange="select_type()" id="warehouseTypes">
         </select>
-      </div>
-      <div id="lefDivBottom">
-        <div id="warehouseContainer">
-
+        <div id="warehousesContainer">
         </div>
-      </div>
   </div>
   <div id="rightDiv">
     <table class="itemsTable">
@@ -55,8 +64,94 @@
             <th>Quantity</th>
           </tr>
       </thead>
+      <tbody id="tableBody">
+      </tbody>
     </table>
   </div>
 </div>
 </body>
+<script>
+
+window.onload = function () {
+ get_data();
+};
+
+function get_data() {
+ var api_call_string = "http://" + document.location.hostname + "/api/types";
+ $.get(api_call_string, function (data, status) {
+   update_dropdown(data);
+ });
+};
+
+function update_dropdown(data) {
+ var doc = document.getElementById("warehouseTypes");
+ doc.innerHTML = "";
+
+ var k = data[0].length;
+ var x = data[0][2].type_name;
+ for (i = 0; i < k; ++i) {
+   var name = data[0][i].type_name;
+   doc.insertAdjacentHTML("beforeend", "<option value='" + (i + 1) + "'>" + name + "</option>");
+ }
+ select_type();
+}
+
+function select_type() {
+ var warehouses_list = document.getElementById("warehousesContainer");
+ warehouses_list.innerHTML = "";
+ var http = new XMLHttpRequest();
+ var item_id = document.getElementById('warehouseTypes').value;
+ var api_call_string = 'http://citysupport.tech/api/warehouses/' + item_id;
+ $.get(api_call_string, function (data, status) {
+   update_warehouse(data);
+ });
+}
+
+function update_warehouse(data) {
+ var k = data[0].length;
+ for (i = 0; i < k; ++i) {
+   var Warehouse_id = data[0][i].warehouse_id;
+   var Name = data[0][i].warehouse_name;
+   var Phone = data[0][i].warehouse_phone;
+   var Address = data[0][i].warehouse_address + ", " + data[0][i].warehouse_city
+   add_warehouse(Warehouse_id, Name, Phone, Address);
+ }
+}
+
+function add_warehouse(Warehouse_id, Name, Phone, Address) {
+ var warehouses_list = document.getElementById("warehousesContainer");
+ warehouses_list.insertAdjacentHTML("beforeend", `
+  <div  onclick="select_warehouse(this.id)" id="`+ Warehouse_id + `" value= ` + Warehouse_id + ` class="warehouseListing">
+             <h4 class="warehouseList">`+ Name + `</h4>
+             <p class="warehouseList">`+ Phone + `</p>
+             <p class="warehouseList">` + Address + `</p>
+         </div>`
+ );
+}
+
+function select_warehouse(warehouse_id) {
+ var item_id = document.getElementById('warehouseTypes').value;
+ var http = new XMLHttpRequest();
+ var api_call_string = 'http://citysupport.tech/api/warehouses/donations/' + warehouse_id + "/" + item_id;
+ console.log("api_call_string: " + api_call_string);
+ $.get(api_call_string, function (data, status) {
+   update_table(data);
+ });
+}
+
+function update_table(data) {
+    var len = data[0].length;
+    table.clear().draw();
+    for (let i = 0; i < len; ++i) {
+      var donation_id = data[0][i].donation_id + "";
+      var donation_name = data[0][i].donation_name+"";
+      var donation_description = data[0][i].donation_description+"";
+      var donation_quantity = data[0][i].donation_quantity+"";
+      console.log(typeof donation_quantity + ', ' + donation_quantity);
+
+      table.row.add([donation_name, donation_description, donation_quantity]).draw(false);
+    }
+}
+</script>
+
 </html>

@@ -19,7 +19,22 @@
   <link rel="stylesheet" href="http://citysupport.tech/stylesheets/warehouseMain2.css">
   <script type="text/javascript">
     $(document).ready(function () {
-      $('table.itemsTable').DataTable();
+      window.table = $('table.itemsTable').DataTable({
+        "columnDefs": [{
+          "targets": -1,
+          "data": null,
+          "defaultContent": "<button class='btn btn-primary' data-toggle='modal' data-target='#submitModal'>Claim</button>"
+        }]
+      });
+      //onclick event
+      $('#tableBody').on('click', 'tr', function () {
+        //retrieve clicked row data
+        var data = table.row(this).data()[0];
+        var claim_donation_id = document.getElementById('donationName');
+        claim_donation_id.value = data;
+
+        // document.getElementById("recordTitle").innerHTML = data[0];
+      });
     });
   </script>
   <title>Warehouse Page</title>
@@ -55,12 +70,15 @@
       <table class="itemsTable">
         <thead>
           <tr>
+            <th>Donation Id</th>
             <th>Item Name</th>
             <th>Description</th>
             <th>Quantity</th>
             <th>Claim</th>
           </tr>
         </thead>
+        <tbody id="tableBody">
+        </tbody>
       </table>
     </div>
   </div>
@@ -77,15 +95,15 @@
         </div>
         <div class="modal-body">
           <div style="height: 200px;">
-            <label for="itemName">Item Name: </label>
-            <input id="itemName" class="form-control" type="text" value="" disabled>
+            <label for="donationName">Donation Id: </label>
+            <input id="donationName" class="form-control" type="text" value="" disabled>
             <label for="quantity">Quantity: </label>
             <input id="quantity" class="form-control" type="text" value="">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button id="modalClaimBtn" type="button" class="btn btn-primary">Claim</button>
+          <button id="modalClaimBtn" onclick="claim_product()" type="button" data-dismiss="modal" class="btn btn-primary">Claim</button>
         </div>
       </div>
     </div>
@@ -151,16 +169,50 @@
   }
 
   function select_sponsor(sponsor_id) {
+    window.sponsor_id = sponsor_id;
     var item_id = document.getElementById('sponsorTypes').value;
     var http = new XMLHttpRequest();
-    var api_call_string = 'http://citysupport.tech/api/sponsors/donations/' + sponsor_id +"/"+ item_id;
+    var api_call_string = 'http://citysupport.tech/api/sponsors/donations/' + sponsor_id + "/" + item_id;
     $.get(api_call_string, function (data, status) {
       update_table(data);
     });
   }
 
   function update_table(data) {
-    console.log(data);
+    var len = data[0].length;
+    table.clear().draw();
+    for (let i = 0; i < len; ++i) {
+      var donation_id = data[0][i].donation_id + "";
+      var donation_name = data[0][i].donation_name + "";
+      var donation_description = data[0][i].donation_description + "";
+      var donation_quantity = data[0][i].donation_quantity + "";
+      console.log(typeof donation_quantity + ', ' + donation_quantity);
+
+      table.row.add([donation_id, donation_name, donation_description, donation_quantity]).draw(false);
+    }
+  }
+
+  function claim_product() {
+    var donation_id = document.getElementById('donationName').value;
+     var quantity = document.getElementById('quantity').value;
+
+
+    var http = new XMLHttpRequest();
+    var url = 'http://citysupport.tech/api/donations/claim';
+    var params = 'warehouse_id=1&donation_id='+donation_id+'&claim_quantity=' +quantity;
+    http.open('POST', url, true);
+
+    //Send the proper header information along with the request
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    http.onreadystatechange = function () {//Call a function when the state changes.
+      if (http.readyState == 4 && http.status == 200) {
+        select_sponsor(window.sponsor_id);
+
+        console.log(http.responseText);
+      }
+    }
+    http.send(params);
   }
 </script>
 
