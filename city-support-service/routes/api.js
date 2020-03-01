@@ -49,24 +49,44 @@ router.get('/sponsors/donations/:sid/:tid', function (req, res, next) {
   });
 });
 
-/* GET api listing. */
-router.get('/', function (req, res, next) {
-  res.send('api got a request at base level');
+/* POST api listing. */
+router.post('/donations/give', function (req, res, next) {
+  var donation_id = req.body.donation_id;
+  var quantity = req.body.quantity;
+
+  let sql = 'CALL give(?,?)';
+  con.query(sql, [donation_id, quantity], function (err, result, fields) {
+    if (err) console.log(err);
+    res.send('/'); //TODO ROUTE SOMEWHERE USEFUL
+  });
 });
 
-/* GET api listing. */
-router.get('/', function (req, res, next) {
-  res.send('api got a request at base level');
+/* POST api listing. */
+router.post('/donations/claim', function (req, res, next) {
+  var warehouse_id = req.body.warehouse_id;
+  var donation_id = req.body.donation_id;
+  var quantity = req.body.claim_quantity;
+
+  let sql = 'CALL claim(?,?,?)';
+  con.query(sql, [warehouse_id, donation_id, quantity], function (err, result, fields) {
+    if (err) console.log(err);
+    res.send('/'); //TODO ROUTE SOMEWHERE USEFUL
+  });
 });
 
-/* GET api listing. */
-router.get('/', function (req, res, next) {
-  res.send('api got a request at base level');
-});
+router.post('/donations/', function (req, res, next) {
 
-/* GET api listing. */
-router.get('/', function (req, res, next) {
-  res.send('api got a request at base level');
+  var sponsor_id = req.body.sponsor_id;
+  var donation_name = req.body.donation_name;
+  var quantity = req.body.quantity;
+  var donation_type = req.body.donation_type;
+  var description = req.body.description;
+
+  let sql = 'CALL sponsor_insert(?,?,?,?,?)';
+  con.query(sql, [sponsor_id, donation_name, quantity, donation_type, description], function (err, result, fields) {
+    if (err) console.log(err);
+    res.send('/'); //TODO ROUTE SOMEWHERE USEFUL
+  });
 });
 
 /* GET api listing. */
