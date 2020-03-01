@@ -4,11 +4,11 @@ var mysql = require('mysql');
 var path = require('path');
 
 var con = mysql.createPool({
-  password: 'Secure_123',
-  user: 'dushar88',
-  host: '35.188.254.38',
-  port: 3306,
-  database: 'city_support'
+  password: '',
+  user: '',
+  host: '',
+  port: ,
+  database: ''
 });
 
 /* GET api listing. */
