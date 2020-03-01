@@ -115,7 +115,6 @@
     var type_id = document.getElementById('select_options').value;
     var quantity = document.getElementById('quantity').value;
     var description = document.getElementById('description').value;
-    alert([item_name, type_id, quantity, description]);
 
     var params = 'sponsor_id=1&donation_name='+item_name+'&quantity='+quantity+'&donation_type='+type_id+'&description='+description;
     http.open('POST', url, true);
@@ -125,7 +124,7 @@
 
      http.onreadystatechange = function () {//Call a function when the state changes.
       if (http.readyState == 4 && http.status == 200) {
-        alert(http.responseText);
+        window.location = "http://citysupport.tech/demo/sponsors"
       }
     }
     http.send(params);
