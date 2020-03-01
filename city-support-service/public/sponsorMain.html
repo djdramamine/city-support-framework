@@ -25,15 +25,15 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark " role="navigation">
     <div class="container">
-      <a class="navbar-brand" href="#">City Support</a>
+      <a class="navbar-brand" href="http://citysupport.tech/demo/">City Support</a>
       <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
         &#9776;
       </button>
       <div class="collapse navbar-collapse" id="exCollapsingNavbar">
         <ul class="nav navbar-nav">
-          <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Warehouses</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
+          <li class="nav-item"><a href="http://citysupport.tech/demo/users" class="nav-link">Users</a></li>
+          <li class="nav-item"><a href="http://citysupport.tech/demo/warehouses" class="nav-link">Warehouses</a></li>
+          <li class="nav-item"><a href="http://citysupport.tech/demo/sponsors" class="nav-link">Sponsors</a></li>
         </ul>
       </div>
     </div>
@@ -47,7 +47,6 @@
     </p>
     <hr>
     <div class="container">
-      <form class="form-horizontal">
         <div class="form-group d-inline-flex">
           <label class="control-label col-sm-4 formLabel" for="itemName">Item Name</label>
           <div class="col-sm-10">
@@ -56,9 +55,9 @@
         </div>
         <br>
         <div class="form-group d-inline-flex">
-          <label class="control-label col-sm-4 formLabel" for="type">Type</label>
+          <label class="control-label col-sm-6 formLabel" for="type">Type</label>
           <div class="col-sm-10">
-            <select id="select_options" type="text" class="form-control" id="type"></select>
+            <select id="select_options" type="text" class="form-control"></select>
           </div>
         </div>
         <br>
@@ -78,10 +77,9 @@
         </div>
         <div class="form-group center">
           <div class="col-sm-offset-2 col-sm-10">
-            <button id="submitBtn" type="submit" class="btn btn-secondary">Submit</button>
+            <button id="submitBtn" onclick="insert_donation()" class="btn btn-secondary">Submit</button>
           </div>
         </div>
-      </form>
     </div>
   </div>
 </body>
@@ -91,6 +89,7 @@
   window.onload = function () {
     get_data();
   };
+
   function get_data() {
     var api_call_string = "http://" + document.location.hostname + "/api/types";
     $.get(api_call_string, function (data, status) {
@@ -101,25 +100,38 @@
     var doc = document.getElementById("select_options");
     doc.innerHTML = "";
 
-    var x = JSON.parse(data);
-    alert(x);
-
-   //alert(data[0][2].type_name);
-
-    for (var k in x) {
-      //alert(JSON.parse(k));
-//      alert(k[0]['type_name']);
-
-     // alert(k.type_name);
-      // var id = k['type_id'];
-      // var name = k['type_name'];
-      // doc.insertAdjacentHTML("beforeend", "<option value='" + id + "'>" + name + "</option>");
+    var k = data[0].length;
+    var x = data[0][2].type_name;
+    for (i = 0; i < k; ++i) {
+      var name = data[0][i].type_name;
+      doc.insertAdjacentHTML("beforeend", "<option value='" + (i+1) + "'>" + name + "</option>");
     }
   }
 
-  function filter_call() {
-    var game = document.getElementById("select_options").value;
-    alert("Calling API To Find for All Events with " + game + "...");
+  function insert_donation() {
+    alert("Some");
+    var http = new XMLHttpRequest();
+    var url = 'http://citysupport.tech/api/donations/';
+    var item_name = document.getElementById('itemName').value;
+    var type_id = document.getElementById('select_options').value;
+    var quantity = document.getElementById('quantity').value;
+    var description = document.getElementById('description').value;
+    alert([item_name, type_id, quantity, description]);
+
+    var params = 'sponsor_id=1&donation_name='+item_name+'&quantity='+quantity+'&donation_type='+type_id+'&description='+description;
+    http.open('POST', url, true);
+
+    //Send the proper header information along with the request
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+     http.onreadystatechange = function () {//Call a function when the state changes.
+      if (http.readyState == 4 && http.status == 200) {
+        alert(http.responseText);
+      }
+    }
+    http.send(params);
+
+
   }
 
 </script>

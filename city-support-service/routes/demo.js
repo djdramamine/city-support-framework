@@ -25,6 +25,13 @@ router.get('/sponsors', function (req, res, next) {
   });
 });
 
+/* GET api listing. */
+router.get('/sponsors2', function (req, res, next) {
+  res.sendFile('sponsorMain_copy.html', {
+    root: path.resolve(__dirname, '../public')
+  });
+});
+
 router.get('/warehouses', function (req, res, next) {
   res.sendFile('warehouseMain.html', {
     root: path.resolve(__dirname, '../public')

@@ -1,82 +1,167 @@
 <html>
+
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
-  <link rel="stylesheet" href="http://citysupport.tech/stylesheets/warehouseMain.css">
+  <link rel="stylesheet" href="http://citysupport.tech/stylesheets/warehouseMain2.css">
   <script type="text/javascript">
-    $(document).ready(function(){
-        $('table.itemsTable').DataTable();
+    $(document).ready(function () {
+      $('table.itemsTable').DataTable();
     });
   </script>
   <title>Warehouse Page</title>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark " role="navigation">
     <div class="container">
-        <a class="navbar-brand" href="#">City Support</a>
-        <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
-            &#9776;
-        </button>
-        <div class="collapse navbar-collapse" id="exCollapsingNavbar">
-            <ul class="nav navbar-nav">
-                <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Warehouses</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<br>
-<div id="mainDiv">
-  <div id="leftDiv">
-      <h5>Available Sponsors</h5>
-      <hr>
-      <div id="sponsorsContainer">
-
+      <a class="navbar-brand" href="http://citysupport.tech/demo/">City Support</a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+        &#9776;
+      </button>
+      <div class="collapse navbar-collapse" id="exCollapsingNavbar">
+        <ul class="nav navbar-nav">
+          <li class="nav-item"><a href="http://citysupport.tech/demo/users" class="nav-link">Users</a></li>
+          <li class="nav-item"><a href="http://citysupport.tech/demo/warehouses" class="nav-link">Warehouses</a></li>
+          <li class="nav-item"><a href="http://citysupport.tech/demo/sponsors" class="nav-link">Sponsors</a></li>
+        </ul>
       </div>
-  </div>
-  <div id="rightDiv">
-    <table class="itemsTable">
-      <thead>
+    </div>
+  </nav>
+  <br>
+  <div id="mainDiv">
+    <div id="leftDiv">
+      <label for="sponsorTypes">Select Sponsor Types</label>
+      <br>
+      <select onchange="select_type()" id="sponsorTypes">
+      </select>
+      <div id="sponsorsContainer">
+      </div>
+    </div>
+    <div id="rightDiv">
+      <table class="itemsTable">
+        <thead>
           <tr>
             <th>Item Name</th>
             <th>Description</th>
             <th>Quantity</th>
             <th>Claim</th>
           </tr>
-      </thead>
-    </table>
+        </thead>
+      </table>
+    </div>
   </div>
-</div>
-<!-- Submit Modal -->
-<div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Claim Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+  <!-- Submit Modal -->
+  <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Claim Item</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
           <div style="height: 200px;">
-              <label for="itemName">Item Name: </label>
-              <input id="itemName" class="form-control" type="text" value="" disabled>
-              <label for="quantity">Quantity: </label>
-              <input id="quantity" class="form-control" type="text" value="">
+            <label for="itemName">Item Name: </label>
+            <input id="itemName" class="form-control" type="text" value="" disabled>
+            <label for="quantity">Quantity: </label>
+            <input id="quantity" class="form-control" type="text" value="">
           </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="modalClaimBtn" type="button" class="btn btn-primary">Claim</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="modalClaimBtn" type="button" class="btn btn-primary">Claim</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </body>
+<script>
+
+  window.onload = function () {
+    get_data();
+  };
+
+  function get_data() {
+    var api_call_string = "http://" + document.location.hostname + "/api/types";
+    $.get(api_call_string, function (data, status) {
+      update_dropdown(data);
+    });
+  };
+
+  function update_dropdown(data) {
+    var doc = document.getElementById("sponsorTypes");
+    doc.innerHTML = "";
+
+    var k = data[0].length;
+    var x = data[0][2].type_name;
+    for (i = 0; i < k; ++i) {
+      var name = data[0][i].type_name;
+      doc.insertAdjacentHTML("beforeend", "<option value='" + (i + 1) + "'>" + name + "</option>");
+    }
+    select_type();
+  }
+
+  function select_type() {
+    var sponsors_list = document.getElementById("sponsorsContainer");
+    sponsors_list.innerHTML = "";
+    var http = new XMLHttpRequest();
+    var item_id = document.getElementById('sponsorTypes').value;
+    var api_call_string = 'http://citysupport.tech/api/sponsors/' + item_id;
+    $.get(api_call_string, function (data, status) {
+      update_sponsor(data);
+    });
+  }
+
+  function update_sponsor(data) {
+    var k = data[0].length;
+    for (i = 0; i < k; ++i) {
+      var Sponsor_id = data[0][i].sponsor_id;
+      var Name = data[0][i].sponsor_name;
+      var Phone = data[0][i].sponsor_phone;
+      var Address = data[0][i].sponsor_address + ", " + data[0][i].sponsor_city
+      add_sponsor(Sponsor_id, Name, Phone, Address);
+    }
+  }
+
+  function add_sponsor(Sponsor_id, Name, Phone, Address) {
+    var sponsors_list = document.getElementById("sponsorsContainer");
+    sponsors_list.insertAdjacentHTML("beforeend", `
+     <div  onclick="select_sponsor(this.id)" id="`+ Sponsor_id + `" value= ` + Sponsor_id + ` class="sponsorListing">
+                <h4 class="sponsorList">`+ Name + `</h4>
+                <p class="sponsorList">`+ Phone + `</p>
+                <p class="sponsorList">` + Address + `</p>
+            </div>`
+    );
+  }
+
+  function select_sponsor(sponsor_id) {
+    var item_id = document.getElementById('sponsorTypes').value;
+    var http = new XMLHttpRequest();
+    var api_call_string = 'http://citysupport.tech/api/sponsors/donations/' + sponsor_id +"/"+ item_id;
+    $.get(api_call_string, function (data, status) {
+      update_table(data);
+    });
+  }
+
+  function update_table(data) {
+    console.log(data);
+  }
+</script>
+
 </html>
