@@ -12,6 +12,15 @@ var con = mysql.createPool({
 });
 
 /* GET api listing. */
+router.get('/types/', function (req, res, next) {
+  let sql = 'CALL getDonationTypes()';
+  con.query(sql, function (err, result, fields) {
+    if (err) console.log(err);
+    res.send(result);
+  });
+});
+
+/* GET api listing. */
 router.get('/sponsors/:id', function (req, res, next) {
   let sql = 'CALL getSponsors(?)';
   con.query(sql, req.params["id"], function (err, result, fields) {

@@ -1,42 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
-    <link rel="stylesheet" href="http://citysupport.tech/stylesheets/sponsorMain.css">
-    <title>Sponsor Page</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark " role="navigation">
-      <div class="container">
-          <a class="navbar-brand" href="#">City Support</a>
-          <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
-              &#9776;
-          </button>
-          <div class="collapse navbar-collapse" id="exCollapsingNavbar">
-              <ul class="nav navbar-nav">
-                  <li class="nav-item"><a href="#" class="nav-link">About</a></li>
-                  <li class="nav-item"><a href="#" class="nav-link">Warehouses</a></li>
-                  <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
-              </ul>
-          </div>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+  <link rel="stylesheet" href="http://citysupport.tech/stylesheets/sponsorMain.css">
+  <title>Sponsor Page</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark " role="navigation">
+    <div class="container">
+      <a class="navbar-brand" href="#">City Support</a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+        &#9776;
+      </button>
+      <div class="collapse navbar-collapse" id="exCollapsingNavbar">
+        <ul class="nav navbar-nav">
+          <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Warehouses</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
+  <br>
+  <div id="mainDiv">
+    <h3>Welcome to City Support</h3>
     <br>
-    <div id="mainDiv">
-      <h3>Welcome to City Support</h3>
-      <br>
-      <p>
-        Please enter the item(s) to donate.
-      </p>
-      <hr>
-      <div class="container">
+    <p>
+      Please enter the item(s) to donate.
+    </p>
+    <hr>
+    <div class="container">
       <form class="form-horizontal">
         <div class="form-group d-inline-flex">
           <label class="control-label col-sm-4 formLabel" for="itemName">Item Name</label>
@@ -48,7 +58,7 @@
         <div class="form-group d-inline-flex">
           <label class="control-label col-sm-4 formLabel" for="type">Type</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="type">
+            <select id="select_options" type="text" class="form-control" id="type"></select>
           </div>
         </div>
         <br>
@@ -71,8 +81,47 @@
             <button id="submitBtn" type="submit" class="btn btn-secondary">Submit</button>
           </div>
         </div>
-    </form>
+      </form>
     </div>
-    </div>
-  </body>
+  </div>
+</body>
+
+<script>
+
+  window.onload = function () {
+    get_data();
+  };
+  function get_data() {
+    var api_call_string = "http://" + document.location.hostname + "/api/types";
+    $.get(api_call_string, function (data, status) {
+      update_dropdown(data);
+    });
+  };
+  function update_dropdown(data) {
+    var doc = document.getElementById("select_options");
+    doc.innerHTML = "";
+
+    var x = JSON.parse(data);
+    alert(x);
+
+   //alert(data[0][2].type_name);
+
+    for (var k in x) {
+      //alert(JSON.parse(k));
+//      alert(k[0]['type_name']);
+
+     // alert(k.type_name);
+      // var id = k['type_id'];
+      // var name = k['type_name'];
+      // doc.insertAdjacentHTML("beforeend", "<option value='" + id + "'>" + name + "</option>");
+    }
+  }
+
+  function filter_call() {
+    var game = document.getElementById("select_options").value;
+    alert("Calling API To Find for All Events with " + game + "...");
+  }
+
+</script>
+
 </html>
