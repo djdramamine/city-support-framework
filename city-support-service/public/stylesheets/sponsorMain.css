@@ -1,0 +1,18 @@
+#mainDiv{
+  width: 50%;
+  margin: 0 auto;
+}
+
+#mainDiv h3, #mainDiv p {
+  text-align: center;
+}
+
+#donationForm{
+    padding-top: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.formLabel{
+  width: 100px;
+}
